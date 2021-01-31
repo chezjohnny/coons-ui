@@ -1,0 +1,7 @@
+<a draggable="true" [dragScope]="'objects'" [dragData]="object" [routerLink]="['object', object.id]">
+  <span class="icon is-small mr-2">
+    <fa-icon [icon]="['fas', 'grip-vertical']"></fa-icon>
+  </span>
+  <span>{{ object.metadata.name }}</span>
+  <span class="tag is-light">{{object.metadata.type}}</span>
+</a>
