@@ -1,0 +1,55 @@
+<ng-container [formGroup]="formGroup">
+  <ng-container *ngIf="subject$ | async">
+
+    <!-- Subject -->
+    <div class="field">
+      <div class="control">
+        <editable (save)="update()" (cancel)="cancel()">
+          <ng-template viewMode><span class="is-size-4">{{ subject.metadata.name }}</span></ng-template>
+          <ng-template editMode>
+            <input editableOnEnter editableOnEscape formControlName="name" class="input is-size-5" type="text"
+              placeholder="Text input">
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <editable (save)="update()" (cancel)="cancel()">
+          <ng-template viewMode><span class="tag is-size-6 is-light">{{ subject.metadata.type }}</span></ng-template>
+          <ng-template editMode>
+            <input editableOnEnter editableOnEscape class="input" formControlName="type" />
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+
+    <!-- Objects -->
+    <h2 class="title is-5 mb-1">Objects</h2>
+    <div droppable [dropScope]="isDropAllowed" class="has-min-height-50 dropzone mb-3 p-3" (onDrop)="onObjectDrop($event)">
+      <p *ngIf="subject.metadata.objects.length < 1">Drop items here</p>
+      <ul class="menu-list" formArrayName="objects">
+        <li [formGroupName]="i" *ngFor="let object of subject.metadata.objects; let i=index">
+          <editable (save)="update()" (cancel)="cancel()">
+            <ng-template viewMode><span>
+                {{object.predicate}}
+              </span>
+            </ng-template>
+            <ng-template editMode>
+              <input editableOnEnter editableOnEscape formControlName="predicate" class="input" type="text"
+                placeholder="Text input">
+            </ng-template>
+          </editable>
+          <span class="icon is-small is-right">
+            <fa-icon [icon]="['fas', 'long-arrow-alt-right']"></fa-icon>
+          </span>
+          <app-object-link class="is-inline-block" [objectLink]="object"></app-object-link>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Files -->
+    <app-files [subjectID]="subject.id"></app-files>
+
+  </ng-container>
+</ng-container>
