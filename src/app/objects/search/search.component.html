@@ -1,0 +1,36 @@
+<div class="columns" *ngIf="results$ | async as results; else isLoading">
+  <aside class="menu column is-2">
+    <ng-container *ngFor="let agg of results.aggregations | keyvalue">
+      <p class="menu-label">
+        {{agg.key}}
+      </p>
+      <ul class="menu-list">
+        <li *ngFor="let term of agg.value.buckets">{{term.key}} <span
+            class="has-text-info is-pulled-right ">{{term.doc_count}}</span></li>
+      </ul>
+    </ng-container>
+  </aside>
+  <div class="card column is-10">
+    <header class="card-header">
+      <h5 class="card-header-title">Objects</h5>
+    </header>
+    <div class="card-content">
+      <ul *ngIf="results.hits.total > 0; else noResult">
+        <li *ngFor="let object of results.hits.hits">
+          <app-object-card [object]="object"></app-object-card>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<ng-template #noResult>
+  <span>No results</span>
+  <div>
+    <a [routerLink]="['']" class="mt-4 button is-info is-small">See all results</a>
+  </div>
+</ng-template>
+
+<ng-template #isLoading>
+  <span>Loading...</span>
+</ng-template>
