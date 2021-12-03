@@ -1,10 +1,15 @@
-<p class="menu-label">
-  Sticky
-</p>
+
+<nav>
+<em>Sticky</em>
 
 <div droppable [dropScope]="isDropAllowed" (onDrop)="onItemDrop($event)">
   <p *ngIf="objects.length < 1">Drop items here</p>
   <ul>
-    <li class="mb-2" *ngFor="let object of objects"><app-object-card [object]="object"></app-object-card><button (click)="remove(object)" class="delete is-small"></button></li>
+    <li class="mb-2" *ngFor="let object of objects">
+      <fa-icon (click)="remove(object)" [icon]="['fas', 'times-circle']">
+      </fa-icon>
+      <app-object-card [object]="object"></app-object-card>
+    </li>
   </ul>
 </div>
+</nav>

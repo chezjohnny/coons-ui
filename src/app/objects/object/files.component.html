@@ -1,14 +1,14 @@
-<h2 class="title is-5 mb-1">Files</h2>
-<ngx-dropzone (change)="onFilesAdded($event)" [expandable]="true" [disableClick]="false">
-  <ngx-dropzone-label>Drop some files!</ngx-dropzone-label>
-  <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-    <ngx-dropzone-label>
-      {{ getTitle(f) }} ({{ f.type }})
-      <a [href]="downloadURL(f)" class="button is-small">
-        <span class="icon is-small">
+<article>
+  <h5 class="title is-5 mb-1">Files</h5>
+  <ngx-dropzone (change)="onFilesAdded($event)" [expandable]="true" [disableClick]="false">
+    <ngx-dropzone-label>Drop some files!</ngx-dropzone-label>
+    <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+      <ngx-dropzone-label>
+        {{ getTitle(f) }} ({{ f.type }})
+        <a [href]="downloadURL(f)" class="button is-small">
           <fa-icon [icon]="['fas', 'download']"></fa-icon>
-        </span>
-      </a>
-    </ngx-dropzone-label>
-  </ngx-dropzone-preview>
-</ngx-dropzone>
+        </a>
+      </ngx-dropzone-label>
+    </ngx-dropzone-preview>
+  </ngx-dropzone>
+</article>

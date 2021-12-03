@@ -28,6 +28,7 @@ export class ObjectComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       name: [''],
       type: [''],
+      content: [''],
       objects: this.formBuilder.array([])
     });
   }
@@ -57,6 +58,9 @@ export class ObjectComponent implements OnInit {
           this.subject = result;
           if (this.subject.metadata.objects == null) {
             this.subject.metadata.objects = [];
+          }
+          if (this.subject.metadata.content == null) {
+            this.subject.metadata.content = '';
           }
           this.formGroup.get('objects').clear();
           for (const link of this.subject.metadata.objects) {

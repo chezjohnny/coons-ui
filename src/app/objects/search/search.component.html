@@ -1,36 +1,45 @@
-<div class="columns" *ngIf="results$ | async as results; else isLoading">
-  <aside class="menu column is-2">
-    <ng-container *ngFor="let agg of results.aggregations | keyvalue">
-      <p class="menu-label">
-        {{agg.key}}
-      </p>
-      <ul class="menu-list">
-        <li *ngFor="let term of agg.value.buckets">{{term.key}} <span
-            class="has-text-info is-pulled-right ">{{term.doc_count}}</span></li>
-      </ul>
-    </ng-container>
+<ng-container *ngIf="results && results.hits">
+  <aside>
+    <nav>
+      <em>{{results.hits.total}} results</em>
+      <details *ngFor="let agg of results.aggregations | keyvalue">
+        <summary>
+          {{agg.key}}
+        </summary>
+        <ul>
+          <li *ngFor="let term of agg.value.buckets">
+            <small><a (click)="toggleFilter(agg.key, term.key)" class="secondary">
+                {{term.key}}
+                <strong>{{term.doc_count}} </strong>
+                <fa-icon *ngIf="hasFilter(agg.key, term.key)" [icon]="['fas', 'check-circle']">
+                </fa-icon>
+              </a>
+            </small>
+          </li>
+        </ul>
+      </details>
+    </nav>
   </aside>
-  <div class="card column is-10">
-    <header class="card-header">
-      <h5 class="card-header-title">Objects</h5>
-    </header>
-    <div class="card-content">
-      <ul *ngIf="results.hits.total > 0; else noResult">
-        <li *ngFor="let object of results.hits.hits">
+
+  <div class="content" role="document">
+    <ng-container *ngIf="results.hits.total > 0; else noResult">
+      <article *ngFor="let object of results.hits.hits">
+        <h4>
           <app-object-card [object]="object"></app-object-card>
-        </li>
-      </ul>
+        </h4>
+        <h5 *ngIf="object.metadata.objects">{{object.metadata.objects.length}} objects</h5>
+        <p *ngIf="object.metadata.content">
+          {{object.metadata.content}}
+        </p>
+      </article>
+    </ng-container>
+  </div>
+
+
+  <ng-template #noResult>
+    <span>No results</span>
+    <div>
+      <a (click)="clearAggFilters()" class="mt-4 button is-info is-small" translate>See all results</a>
     </div>
-  </div>
-</div>
-
-<ng-template #noResult>
-  <span>No results</span>
-  <div>
-    <a [routerLink]="['']" class="mt-4 button is-info is-small">See all results</a>
-  </div>
-</ng-template>
-
-<ng-template #isLoading>
-  <span>Loading...</span>
-</ng-template>
+  </ng-template>
+</ng-container>
