@@ -1,51 +1,30 @@
-<div class="container">
+<ngx-loading-bar></ngx-loading-bar>
 
-  <nav class="navbar is-fixed-top is-light" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item is-size-3" [routerLink]="['']">
+<nav class="container-fluid">
+  <ul>
+    <li>
+      <input #searchQuery (keyup.enter)="search(searchQuery.value)" class="input is-rounded" type="search"
+        placeholder="Search...">
+    </li>
+    <li>
+      <a class="logo" [routerLink]="['']">
         🦝
       </a>
+    </li>
+  </ul>
 
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
+  <ul>
+    <li>
+      <button (click)="createRecord()" class="outline">Add</button>
+    </li>
+  </ul>
+</nav>
 
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-start">
-        <a [routerLink]="['']" class="navbar-item">
-          Home
-        </a>
-      </div>
-
-      <div class="navbar-end">
-        <div class="navbar-item">
-        <button (click)="createRecord()" class="button is-info">Add</button>
-      </div>
-        <div class="navbar-item field">
-          <p class="control has-icons-right">
-            <input #searchQuery (keyup.enter)="search(searchQuery.value)" class="input is-rounded" type="search"
-              placeholder="Search...">
-            <span class="icon is-small is-right">
-              <fa-icon [icon]="['fas', 'search']"></fa-icon>
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </nav>
-  <section class="section">
-    <div class="mt-5 columns">
-
-      <div class="column is-10">
-      <router-outlet></router-outlet>
-    </div>
-
-    <aside class="menu column is-2">
-      <app-sticky></app-sticky>
-    </aside>
-    </div>
-  </section>
-</div>
+<main class="container-fluid">
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+  <aside class="left">
+    <app-sticky></app-sticky>
+  </aside>
+</main>

@@ -17,8 +17,14 @@ export class ObjectsService {
     }
   };
 
-  search(query): Observable<any> {
-    return this.http.get(`/api/objects?q=${query}`);
+  search(query, filters = null): Observable<any> {
+    let queryFilters = '';
+    if (filters != null) {
+      for (const [key, value] of Object.entries(filters)) {
+        queryFilters += `&${key}=${value}`;
+      }
+    }
+    return this.http.get(`/api/objects?size=10&q=${query}${queryFilters}`);
   }
 
   read(pid): Observable<any> {

@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  // --font-size: 15px !important;
+  // --spacing: 1px !important;
+}
+
+body > app-root > nav {
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  backdrop-filter: saturate(180%) blur(20px);
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 1px 0 rgba(115, 130, 140, 0.2);
+}
+
+aside {
+  position: fixed;
+  width: 200px;
+  margin-bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  top: 102px;
+}
+
+.content {
+  margin-top: 110px;
+  margin-left: 250px;
+  margin-right: 250px;
+}
+
+aside.left {
+  right: 0;
+}
