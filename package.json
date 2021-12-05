@@ -1,10 +1,13 @@
 {
   "name": "@coons-ui/core",
   "version": "1.0.0-alpha.0",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
-    "pack": "ng build --configuration production && cp package.json dist/coons-ui && cd dist/coons-ui && npm pack",
+    "pack": "ng build --configuration production &&  npm pack",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

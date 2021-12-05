@@ -57,7 +57,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "deployUrl": "/static/node_modules/@coons-ui/core/",
+              "deployUrl": "/static/node_modules/@coons-ui/core/dist/coons-ui/",
               "budgets": [
                 {
                   "type": "initial",
