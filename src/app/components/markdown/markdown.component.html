@@ -1,0 +1,5 @@
+<div [hidden]="readOnly">
+  <textarea  #textarea></textarea>
+</div>
+
+<div *ngIf="readOnly" [innerHtml]="content"></div>

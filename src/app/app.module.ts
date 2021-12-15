@@ -18,6 +18,7 @@ import { NgDragDropModule } from 'ng-drag-drop';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MarkdownComponent } from './components/markdown/markdown.component';
 import { FilesComponent } from './objects/object/files.component';
 import { ObjectCardComponent } from './objects/object/object-card.component';
 import { ObjectLinkComponent } from './objects/object/object-link.component';
@@ -34,6 +35,7 @@ import { StickyComponent } from './objects/sticky/sticky.component';
     ObjectLinkComponent,
     FilesComponent,
     ObjectCardComponent,
+    MarkdownComponent
   ],
   imports: [
     BrowserModule,

@@ -28,9 +28,11 @@
           <app-object-card [object]="object"></app-object-card>
         </h4>
         <h5 *ngIf="object.metadata.objects">{{object.metadata.objects.length}} objects</h5>
-        <p *ngIf="object.metadata.content">
-          {{object.metadata.content}}
-        </p>
+        <details>
+          <summary>More...</summary>
+        <app-markdown *ngIf="object.metadata.content" [readOnly]="true" [data]="object.metadata.content">
+        </app-markdown>
+      </details>
       </article>
     </ng-container>
   </div>

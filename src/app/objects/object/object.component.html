@@ -1,5 +1,5 @@
 <ng-container [formGroup]="formGroup">
-  <ng-container *ngIf="subject$ | async">
+  <ng-container *ngIf="subject">
     <div class="content" role="document">
 
       <!-- Subject -->
@@ -23,12 +23,12 @@
 
       <editable style="display: block; margin-bottom: 10px;" (save)="update()" (cancel)="cancel()">
         <ng-template viewMode>
-          <p *ngIf="subject.metadata.content">{{ subject.metadata.content }}</p>
-          <p *ngIf="!subject.metadata.content">Please enter a content...</p>
+          <app-markdown [readOnly]="true" [data]="subject.metadata.content">
+          </app-markdown>
         </ng-template>
         <ng-template editMode>
-          <textarea placeholder="Please enter a content..." editableOnEnter editableOnEscape
-            formControlName="content"></textarea>
+            <app-markdown (dataChange)="updateContent($event)" [readOnly]="false" [data]="subject.metadata.content">
+            </app-markdown>
         </ng-template>
       </editable>
 

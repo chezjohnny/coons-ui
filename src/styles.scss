@@ -1,4 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~simplemde/dist/simplemde.min.css";
+
+
+.editor-toolbar.fullscreen {
+  top: 100px;
+}
+
+.CodeMirror-fullscreen {
+  top: 150px;
+}
+
 :root {
   // --font-size: 15px !important;
   // --spacing: 1px !important;
