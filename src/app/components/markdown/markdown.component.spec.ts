@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ObjectLinkComponent } from './object-link.component';
 
+import { MarkdownComponent } from './markdown.component';
 
-describe('ObjectObjectLinkComponent', () => {
-  let component: ObjectLinkComponent;
-  let fixture: ComponentFixture<ObjectLinkComponent>;
+describe('MarkdownComponent', () => {
+  let component: MarkdownComponent;
+  let fixture: ComponentFixture<MarkdownComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ObjectLinkComponent ]
+      declarations: [ MarkdownComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ObjectLinkComponent);
+    fixture = TestBed.createComponent(MarkdownComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -15,10 +15,9 @@ import { ObjectsService } from 'src/app/services/objects.service';
 export class ObjectComponent implements OnInit {
 
   formGroup = null;
+  md = '#test';
 
-  subject$: Observable<any>;
   subject: any = null;
-  objects$: Observable<any>;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,7 +51,7 @@ export class ObjectComponent implements OnInit {
 
   private getsubjects(pid): void {
     // get subjects
-    this.subject$ = this.objectService.read(pid)
+    this.objectService.read(pid)
       .pipe(
         tap(result => {
           this.subject = result;
@@ -72,22 +71,28 @@ export class ObjectComponent implements OnInit {
           this.formGroup.setValue(result.metadata);
           return result;
         })
-      );
+      ).subscribe(result => this.subject = result);
 
   }
 
   update(): void {
+    console.log('bla', this.formGroup.valid);
     if (this.formGroup.valid) {
       const pid = this.subject.id;
       this.subject.metadata = this.formGroup.value;
       this.objectService.update(this.subject).subscribe((subject: any) => {
-        this.subject = subject;
+
+        // this.subject = subject;
         if (this.subject.metadata.objects == null) {
           this.subject.metadata.objects = [];
         }
         this.formGroup.setValue(subject.metadata);
       });
     }
+  }
+
+  updateContent(value) {
+    this.formGroup.get('content').setValue(value);
   }
 
   cancel(): void {
