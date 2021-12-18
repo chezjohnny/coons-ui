@@ -6,9 +6,14 @@ div[droppable] {
 }
 
 .dropzone {
-  border: 2px dashed #717386;
+  border: 1px solid #a2afb9;
   border-radius: 5px;
 }
 textarea {
   min-height: 400px;
+}
+
+ul.objects li {
+  list-style: none;
+  margin: .5rem 0;
 }

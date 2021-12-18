@@ -16,6 +16,20 @@ export class SearchComponent implements OnDestroy {
   currentAgg = 'object_type';
   query = '';
   subscription = new Subscription();
+  aggs = [
+    {
+      code: 'type',
+      name: 'Type'
+    },
+    {
+      code: 'predicate',
+      name: 'Relation'
+    },
+    {
+      code: 'object_type',
+      name: 'Link Type'
+    }
+  ];
 
   constructor(
     private route: ActivatedRoute,

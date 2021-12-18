@@ -1,48 +1,65 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { map } from 'rxjs/operators';
 import { ObjectsFilesService } from 'src/app/services/objects-files.service';
 import { FileWithMetadata } from '../../classes/file-with-metadata';
 
-
 @Component({
   selector: 'app-files',
-  templateUrl: './files.component.html'
+  templateUrl: './files.component.html',
+  styles: [
+    `
+      ngx-dropzone {
+        border: 1px solid #a2afb9;
+        border-radius: 5px;
+      }
+    `,
+  ],
 })
 export class FilesComponent implements OnChanges {
-
   @Input()
   subjectID: string;
 
   files: FileWithMetadata[] = [];
 
-  constructor(private objectFilesService: ObjectsFilesService) { }
+  acceptMimeTypes = 'image/jpeg,image/jpg,image/png,image/gif,application/pdf';
+
+  constructor(
+    private objectFilesService: ObjectsFilesService,
+    sanitizer: DomSanitizer
+  ) {
+    sanitizer.bypassSecurityTrustUrl('*');
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.subjectID &&
-      (
-        changes.subjectID.firstChange ||
-        (changes.subjectID !== changes.subjectID)
-      )) {
+    if (
+      changes.subjectID &&
+      (changes.subjectID.firstChange || changes.subjectID !== changes.subjectID)
+    ) {
       this.getFiles();
     }
   }
 
   getFiles(): void {
-    this.objectFilesService.readAll(this.subjectID)
+    this.objectFilesService
+      .readAll(this.subjectID)
       .pipe(
-        map(files => {
+        map((files) => {
           for (const f of files) {
             this.files.push(f);
           }
+          console.log(this.files);
         })
-      ).subscribe();
+      )
+      .subscribe();
   }
 
   onFilesAdded(event): void {
     this.files.push(...event.addedFiles);
     for (const file of event.addedFiles) {
-      this.objectFilesService.createWithContent(this.subjectID, file)
-      .subscribe();
+      this.objectFilesService
+        .createWithContent(this.subjectID, file)
+        .subscribe();
     }
   }
 
@@ -58,8 +75,8 @@ export class FilesComponent implements OnChanges {
   }
 
   onRemove(file): any {
-    return this.objectFilesService.delete(this.subjectID, file).subscribe(() =>
-      this.files = this.files.filter(f => f !== file)
-    );
+    return this.objectFilesService
+      .delete(this.subjectID, file)
+      .subscribe(() => (this.files = this.files.filter((f) => f !== file)));
   }
 }

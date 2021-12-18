@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~simplemde/dist/simplemde.min.css";
+@import "~@picocss/pico/scss/pico";
 
 
 .editor-toolbar.fullscreen {
@@ -10,9 +11,13 @@
   top: 150px;
 }
 
+.editor-preview-side {
+  top: 150px;
+}
+
 :root {
-  // --font-size: 15px !important;
-  // --spacing: 1px !important;
+  --font-size: 1rem !important;
+  --spacing: 1rem !important;
 }
 
 body > app-root > nav {

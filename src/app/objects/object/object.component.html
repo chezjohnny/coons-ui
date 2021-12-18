@@ -37,7 +37,7 @@
         <h5>Objects</h5>
         <div droppable [dropScope]="isDropAllowed" class="has-min-height-50 dropzone" (onDrop)="onObjectDrop($event)">
           <p *ngIf="subject.metadata.objects.length < 1">Drop items here</p>
-          <ul formArrayName="objects">
+          <ul class="objects" formArrayName="objects">
             <li [formGroupName]="i" *ngFor="let object of subject.metadata.objects; let i=index">
               <editable (save)="update()" (cancel)="cancel()">
                 <ng-template viewMode><span>
