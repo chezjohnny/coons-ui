@@ -31,7 +31,6 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/@picocss/pico/css/pico.min.css",
               "node_modules/ng-drag-drop/style.css"
             ],
             "scripts": [],

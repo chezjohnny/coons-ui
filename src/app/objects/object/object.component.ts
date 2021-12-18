@@ -59,7 +59,7 @@ export class ObjectComponent implements OnInit {
             this.subject.metadata.objects = [];
           }
           if (this.subject.metadata.content == null) {
-            this.subject.metadata.content = '';
+            this.subject.metadata.content = 'Change it';
           }
           this.formGroup.get('objects').clear();
           for (const link of this.subject.metadata.objects) {

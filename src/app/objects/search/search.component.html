@@ -2,21 +2,24 @@
   <aside>
     <nav>
       <em>{{results.hits.total}} results</em>
-      <details *ngFor="let agg of results.aggregations | keyvalue">
-        <summary>
-          {{agg.key}}
-        </summary>
-        <ul>
-          <li *ngFor="let term of agg.value.buckets">
-            <small><a (click)="toggleFilter(agg.key, term.key)" class="secondary">
-                {{term.key}}
-                <strong>{{term.doc_count}} </strong>
-                <fa-icon *ngIf="hasFilter(agg.key, term.key)" [icon]="['fas', 'check-circle']">
-                </fa-icon>
-              </a>
-            </small>
-          </li>
-        </ul>
+      <hr />
+      <details class="agg" *ngFor="let cfg of aggs" open>
+        <ng-container *ngIf="results.aggregations[cfg.code] as agg">
+          <summary>
+            <strong>{{cfg.name}}</strong>
+          </summary>
+          <ul>
+            <li *ngFor="let term of agg.buckets">
+              <small><a (click)="toggleFilter(cfg.code, term.key)" class="secondary">
+                  {{term.key}}
+                  <strong>{{term.doc_count}} </strong>
+                  <fa-icon *ngIf="hasFilter(cfg.code, term.key)" [icon]="['fas', 'check-circle']">
+                  </fa-icon>
+                </a>
+              </small>
+            </li>
+          </ul>
+        </ng-container>
       </details>
     </nav>
   </aside>
@@ -30,9 +33,9 @@
         <h5 *ngIf="object.metadata.objects">{{object.metadata.objects.length}} objects</h5>
         <details>
           <summary>More...</summary>
-        <app-markdown *ngIf="object.metadata.content" [readOnly]="true" [data]="object.metadata.content">
-        </app-markdown>
-      </details>
+          <app-markdown *ngIf="object.metadata.content" [readOnly]="true" [data]="object.metadata.content">
+          </app-markdown>
+        </details>
       </article>
     </ng-container>
   </div>

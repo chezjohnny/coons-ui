@@ -46,6 +46,8 @@ export class MarkdownComponent implements AfterViewInit {
         '|',
         'link',
         'image',
+        'table',
+        'code',
         '|',
         'preview',
         'fullscreen',
