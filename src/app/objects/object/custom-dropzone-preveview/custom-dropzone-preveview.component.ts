@@ -29,7 +29,6 @@ export class CustomDropzonePreviewComponent extends NgxDropzonePreviewComponent 
       console.error('No file to read. Please provide a file using the [file] Input property.');
       return;
     }
-    console.log(this.file);
   }
 
   downloadUrl() {
