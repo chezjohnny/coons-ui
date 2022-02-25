@@ -76,17 +76,15 @@ export class ObjectComponent implements OnInit {
   }
 
   update(): void {
-    console.log('bla', this.formGroup.valid);
     if (this.formGroup.valid) {
       const pid = this.subject.id;
       this.subject.metadata = this.formGroup.value;
       this.objectService.update(this.subject).subscribe((subject: any) => {
 
-        // this.subject = subject;
         if (this.subject.metadata.objects == null) {
           this.subject.metadata.objects = [];
         }
-        this.formGroup.setValue(subject.metadata);
+        this.formGroup.setValue(this.subject.metadata);
       });
     }
   }

@@ -48,7 +48,6 @@ export class FilesComponent implements OnChanges {
           for (const f of files) {
             this.files.push(f);
           }
-          console.log(this.files);
         })
       )
       .subscribe();
