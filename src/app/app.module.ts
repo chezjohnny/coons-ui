@@ -29,6 +29,8 @@ import { ObjectLinkComponent } from './objects/object/object-link.component';
 import { ObjectComponent } from './objects/object/object.component';
 import { SearchComponent } from './objects/search/search.component';
 import { StickyComponent } from './objects/sticky/sticky.component';
+import { EditableOnFocusDirective } from './directives/editable-on-focus.directive';
+import { SaveOnFocusDirective } from './directives/save-on-focus.directive';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { StickyComponent } from './objects/sticky/sticky.component';
     FilesComponent,
     ObjectCardComponent,
     MarkdownComponent,
-    CustomDropzonePreviewComponent
+    CustomDropzonePreviewComponent,
+    EditableOnFocusDirective,
+    SaveOnFocusDirective
   ],
   imports: [
     BrowserModule,

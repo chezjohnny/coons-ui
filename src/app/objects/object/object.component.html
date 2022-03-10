@@ -1,33 +1,32 @@
 <ng-container [formGroup]="formGroup">
   <ng-container *ngIf="subject">
     <div class="content" role="document">
-
       <!-- Subject -->
-      <editable (save)="update()" (cancel)="cancel()">
+      <editable appEditableOnFocus tabindex="1"  (save)="update()" (cancel)="cancel()">
         <ng-template viewMode>
           <h4>{{ subject.metadata.name }}</h4>
         </ng-template>
         <ng-template editMode>
-          <input editableOnEnter editableOnEscape formControlName="name" type="text" placeholder="Text input">
+          <input tabindex="2" appSaveOnFocus formControlName="name" type="text" placeholder="Text input">
         </ng-template>
       </editable>
 
-      <editable style="display: block; margin-bottom: 10px;" (save)="update()" (cancel)="cancel()">
+      <editable appEditableOnFocus tabindex="3" (save)="update()" (cancel)="cancel()">
         <ng-template viewMode>
           <h5>{{ subject.metadata.type }}</h5>
         </ng-template>
         <ng-template editMode>
-          <input editableOnEnter editableOnEscape formControlName="type" />
+          <input tabindex="4" appSaveOnFocus formControlName="type" type="text" placeholder="Text input" />
         </ng-template>
       </editable>
 
-      <editable style="display: block; margin-bottom: 10px;" (save)="update()" (cancel)="cancel()">
+      <editable appEditableOnFocus tabindex="5" style="display: block; margin-bottom: 10px;" (save)="update()" (cancel)="cancel()">
         <ng-template viewMode>
           <app-markdown [readOnly]="true" [data]="subject.metadata.content">
           </app-markdown>
         </ng-template>
         <ng-template editMode>
-            <app-markdown (dataChange)="updateContent($event)" [readOnly]="false" [data]="subject.metadata.content">
+            <app-markdown tabindex="6" (dataChange)="updateContent($event)" [readOnly]="false" [data]="subject.metadata.content">
             </app-markdown>
         </ng-template>
       </editable>
