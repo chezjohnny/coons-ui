@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input,  OnChanges,  Output,  ViewChild } from '@angular/core';
 import * as SimpleMDE from 'simplemde';
-import { marked } from 'marked'
+// import * as marked from 'marked';
 @Component({
   selector: 'app-markdown',
   templateUrl: './markdown.component.html',
@@ -14,7 +14,8 @@ export class MarkdownComponent implements AfterViewInit {
     this._data = value;
     if (this.mde && (this.mde.value() != value)) {
       this.mde.value(value);
-      this.content = marked(this._data);
+      // this.content = marked(this._data);
+      this.content = this.mde.markdown(this._data);
     }
   };
 
@@ -59,7 +60,7 @@ export class MarkdownComponent implements AfterViewInit {
       status: false,
     });
     setTimeout(() => {
-      this.content = marked(this._data);
+      this.content = this.mde.markdown(this._data);
     });
     this.mde.codemirror.on('change', () => {
       this.dataChange.emit(this.mde.value());

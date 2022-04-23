@@ -1,0 +1,18 @@
+<details open *ngIf="files.length>0 || !readOnly ? true : null">
+  <summary>Files ( {{files.length}} )</summary>
+  <ul *ngIf="files && files.length>0">
+    <li style="list-style: none;" *ngFor="let file of files">
+      <a [href]="downloadURL(file)"  >{{file.name}}</a>
+      <ng-container *ngIf="!readOnly">
+        <a [routerLink]="" ><fa-icon style="float: right; margin-left: 10px" (click)="remove(file)" [icon]="['fas', 'trash']"></fa-icon></a>
+      <a [routerLink]="" (click)="markdownToClipboard(file)" style="float: right">
+        <fa-icon [icon]="['fas', 'copy']"></fa-icon>
+      </a>
+      </ng-container>
+    </li>
+  </ul>
+  <ngx-dropzone *ngIf="!readOnly" style="height: 60px;" (change)="onFilesAdded($event)" [expandable]="false" [disableClick]="false" [accept]="acceptMimeTypes">
+    <div style="text-align: center; width: 100%;">Drop file or click to open.</div>
+  </ngx-dropzone>
+</details>
+

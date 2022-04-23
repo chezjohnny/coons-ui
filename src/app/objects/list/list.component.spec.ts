@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ObjectLinkComponent } from './object-link.component';
 
+import { ListComponent } from './list.component';
 
-describe('ObjectObjectLinkComponent', () => {
-  let component: ObjectLinkComponent;
-  let fixture: ComponentFixture<ObjectLinkComponent>;
+describe('ListComponent', () => {
+  let component: ListComponent;
+  let fixture: ComponentFixture<ListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ObjectLinkComponent ]
+      declarations: [ ListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ObjectLinkComponent);
+    fixture = TestBed.createComponent(ListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

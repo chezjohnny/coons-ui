@@ -1,4 +1,65 @@
-li>a.logo {
-  font-size: 60px;
-  padding: 0;
-}
+/* global styling */
+
+// [data-theme="coons"] {
+//   --font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu",
+//   "Cantarell", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+//   "Segoe UI Symbol", "Noto Color Emoji";
+//   --line-height: 1.2;
+//   --font-weight: 400;
+//   --font-size: 16px;
+//   --border-radius: 0.25rem;
+//   --border-width: 1px;
+//   --outline-width: 3px;
+//   --spacing: 1rem;
+//   --typography-spacing-vertical: 1.2rem;
+//   --block-spacing-vertical: calc(var(--spacing) * 2);
+//   --block-spacing-horizontal: var(--spacing);
+//   --form-element-spacing-vertical: 0.6rem;
+//   --form-element-spacing-horizontal: 0.6rem;
+//   --nav-element-spacing-vertical: 0.6rem;
+//   --nav-element-spacing-horizontal: 0.3rem;
+//   --nav-link-spacing-vertical: 0.3rem;
+//   --nav-link-spacing-horizontal: 0.3rem;
+//   --form-label-font-weight: var(--font-weight);
+//   --transition: 0.2s ease-in-out;
+//   --medium-block-spacing-vertical: calc(0.3 * var(--block-spacing-vertical))
+// }
+
+// [data-theme="coons"] body>main {
+//   /* remove extra top space */
+//   padding: 0;
+//   /* main content */
+//   display: flex;
+// }
+
+// /* nav aside bar */
+// [data-theme="coons"] main>aside.icons {
+//   /* border-right: 1px solid #ccc; */
+//   width: 60px;
+//   height: calc(100vh);
+//   flex-grow: 0;     /* do not grow   - initial value: 0 */
+//   flex-shrink: 0;   /* do not shrink - initial value: 1 */
+//   flex-basis: 60px; /* width/height  - initial value: auto */
+// }
+
+// [data-theme="coons"] main>aside.icons>nav {
+//   left:10px;
+// }
+
+// [data-theme="coons"] main nav {
+//   position: fixed; 
+//   max-height: calc(100vh);
+//   overflow-x: hidden;
+//   overflow-y: auto;  
+// }
+
+// [data-theme="coons"] nav a[role=button] {
+//   display: block;
+//   padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
+// }
+
+// /* main content */
+// [data-theme="coons"] div[role=document] {
+//   flex-grow: 1;
+//   padding:  var(--medium-block-spacing-vertical) var(--block-spacing-horizontal);
+// }

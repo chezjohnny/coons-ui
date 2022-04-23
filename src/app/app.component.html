@@ -1,30 +1,33 @@
 <ngx-loading-bar></ngx-loading-bar>
-
-<nav class="container-fluid">
-  <ul>
-    <li>
-      <input #searchQuery (keyup.enter)="search(searchQuery.value)" class="input is-rounded" type="search"
-        placeholder="Search...">
-    </li>
-    <li>
-      <a class="logo" href="/">
-        🦝
-      </a>
-    </li>
-  </ul>
-
-  <ul>
-    <li>
-      <button (click)="createRecord()" class="outline">Add</button>
-    </li>
-  </ul>
-</nav>
-
-<main class="container-fluid">
-  <div>
-    <router-outlet></router-outlet>
-  </div>
-  <aside class="left">
-    <app-sticky></app-sticky>
+<main  id="page" class="container-fluid">
+  <aside class="icons">
+    <nav>
+      <ul>
+        <li>
+          <a [routerLink]="['']" role="button" class="outline">
+            <i><fa-icon [icon]="['fas', 'home']"></fa-icon></i>
+          </a>
+        </li>
+        <li>
+          <a href=""  (click)="createRecord($event)" role="button" class="outline">
+            <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/objects']" role="button" class="outline">
+            <fa-icon [icon]="['fas', 'search']"></fa-icon>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/bookmark']" role="button" class="outline">
+            <fa-icon [icon]="['fas', 'bookmark']"></fa-icon>
+          </a>
+       </li>
+      </ul>
+    </nav>
   </aside>
+  <div role="document">
+      <router-outlet></router-outlet>
+  </div>
 </main>
+
