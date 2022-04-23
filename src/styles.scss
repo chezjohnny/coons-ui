@@ -1,51 +1,233 @@
-/* You can add global styles to this file, and also import other style files */
+// /* You can add global styles to this file, and also import other style files */
 @import "~simplemde/dist/simplemde.min.css";
 @import "~@picocss/pico/scss/pico";
 
-
-.editor-toolbar.fullscreen {
-  top: 100px;
+[data-theme="coons"] {
+  --font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu",
+  "Cantarell", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+  "Segoe UI Symbol", "Noto Color Emoji";
+  --line-height: 1.2;
+  --font-weight: 400;
+  --font-size: 16px;
+  --border-radius: 0.25rem;
+  --border-width: 1px;
+  --outline-width: 3px;
+  --spacing: 1rem;
+  --typography-spacing-vertical: 1.2rem;
+  --block-spacing-vertical: calc(var(--spacing) * 2);
+  --block-spacing-horizontal: var(--spacing);
+  --form-element-spacing-vertical: 0.6rem;
+  --form-element-spacing-horizontal: 0.6rem;
+  --nav-element-spacing-vertical: 0.6rem;
+  --nav-element-spacing-horizontal: 0.3rem;
+  --nav-link-spacing-vertical: 0.3rem;
+  --nav-link-spacing-horizontal: 0.3rem;
+  --form-label-font-weight: var(--font-weight);
+  --transition: 0.2s ease-in-out;
+  --medium-block-spacing-vertical: calc(0.3 * var(--block-spacing-vertical))
 }
 
-.CodeMirror-fullscreen {
-  top: 150px;
+[data-theme="coons"] body main {
+  /* remove extra top space */
+  padding: 0;
+  /* main content */
+  display: flex;
 }
 
-.editor-preview-side {
-  top: 150px;
+/* nav aside bar */
+[data-theme="coons"] main>aside.icons {
+  /* border-right: 1px solid #ccc; */
+  width: 60px;
+  height: calc(100vh);
+  flex-grow: 0;     /* do not grow   - initial value: 0 */
+  flex-shrink: 0;   /* do not shrink - initial value: 1 */
+  flex-basis: 60px; /* width/height  - initial value: auto */
 }
 
-:root {
-  --font-size: 1rem !important;
-  --spacing: 1rem !important;
+[data-theme="coons"] main>aside.icons>nav {
+  left:10px;
 }
 
-body > app-root > nav {
-  z-index: 99;
+[data-theme="coons"] main nav {
   position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  backdrop-filter: saturate(180%) blur(20px);
-  background-color: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 1px 0 rgba(115, 130, 140, 0.2);
-}
-
-aside {
-  position: fixed;
-  width: 200px;
-  margin-bottom: 0;
+  max-height: calc(100vh);
   overflow-x: hidden;
   overflow-y: auto;
-  top: 102px;
 }
 
-.content {
-  margin-top: 110px;
-  margin-left: 250px;
-  margin-right: 250px;
+[data-theme="coons"] nav a[role=button] {
+  display: block;
+  padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
 }
 
-aside.left {
-  right: 0;
+/* main content */
+[data-theme="coons"] div[role=document] {
+  flex-grow: 1;
+  padding:  var(--medium-block-spacing-vertical) var(--block-spacing-horizontal);
+}
+
+[data-theme="coons"] article {
+  /* margin: 20px; */
+  position: relative;
+  padding: var(--medium-block-spacing-vertical) var(--block-spacing-horizontal);
+}
+
+[data-theme="coons"] article::after {
+  clear: both;
+  content: '';
+  display: block;
+}
+
+
+[data-theme="coons"] li article,
+[data-theme="coons"] article article
+{
+  margin: 20px;
+}
+
+[data-theme="coons"] div[role=document] ol {
+  list-style: none;
+  padding: 0;
+}
+
+[data-theme="coons"] article h2 {
+  margin-bottom:  calc(0.1*var(--block-spacing-vertical));
+}
+
+[data-theme="coons"] article h2 small {
+  font-weight: normal;
+}
+
+[data-theme="coons"] article label {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+[data-theme="coons"] article strong {
+  margin-left:3rem;
+}
+
+[data-theme="coons"] article p {
+  margin-top: var(--medium-block-spacing-vertical);
+}
+
+
+@media (min-width: 768px) {
+  [data-theme="coons"] article.more {
+      float: right;
+      width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  [data-theme="coons"] article.more {
+      margin:0;
+  }
+}
+
+[data-theme="coons"] article.sticky {
+  position: fixed;
+  top: 120px;
+  right: 60px;
+  z-index: 1000;
+}
+
+[data-theme="coons"] .files li a {
+  display: inline;
+}
+
+[data-theme="coons"] section article:first-child {
+  margin-top:10px;
+}
+
+[data-theme="coons"] section header {
+  margin-bottom: 20px;
+}
+
+// // .editor-toolbar.fullscreen {
+// //   top: 100px;
+// // }
+
+// // .CodeMirror-fullscreen {
+// //   top: 150px;
+// // }
+
+// // ng-autocomplete input {
+// //   margin: 0px !important;
+// // }
+
+// // .editor-preview-side {
+// //   top: 150px;
+// // }
+
+// // :root {
+// //   --font-size: 1rem !important;
+// //   --spacing: 1rem !important;
+// // }
+
+// // body > app-root > nav {
+// //   z-index: 99;
+// //   position: fixed;
+// //   top: 0;
+// //   right: 0;
+// //   left: 0;
+// //   backdrop-filter: saturate(180%) blur(20px);
+// //   background-color: rgba(255, 255, 255, 0.7);
+// //   box-shadow: 0 1px 0 rgba(115, 130, 140, 0.2);
+// // }
+
+// // aside {
+// //   position: fixed;
+// //   width: 200px;
+// //   margin-bottom: 0;
+// //   overflow-x: hidden;
+// //   overflow-y: auto;
+// //   top: 102px;
+// // }
+
+// // .content {
+// //   margin-top: 110px;
+// //   margin-left: 250px;
+// //   margin-right: 250px;
+// // }
+
+// // aside.left {
+// //   right: 0;
+// // }
+
+ng-autocomplete input {
+  margin-bottom: 0 !important;
+}
+
+[data-theme="coons"] article  figure {
+  text-align: center;
+}
+
+[data-theme="coons"] article p img, figure img {
+  max-width: 600px;
+}
+
+[data-theme="coons"] article.more {
+  z-index: 10000;
+}
+
+[data-theme="coons"] article h5 {
+  margin-bottom: 0;
+}
+
+[data-theme="coons"] .cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="coons"] .cdk-drag-placeholder {
+  opacity: 0;
+}
+
+[data-theme="coons"] .cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

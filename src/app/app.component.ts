@@ -10,11 +10,8 @@ import { ObjectsService } from './services/objects.service';
 export class AppComponent {
   constructor(private router: Router, private objectSerice: ObjectsService) {}
 
-  search(query: string): void {
-    this.router.navigate([''], {queryParams: {q: query ? query : ''}});
-  }
-
-  createRecord(): void {
-    this.objectSerice.create().subscribe((doc: any) => this.router.navigate(['object', doc.id]));
+  createRecord($event): void {
+    $event.preventDefault();
+    this.objectSerice.create().subscribe((doc: any) => this.router.navigate(['/object', doc.id, 'edit']));
   }
 }

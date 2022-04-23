@@ -1,0 +1,65 @@
+<details open *ngIf="links.length>0 || !readOnly ? true : null">
+  <summary>Links ({{ links.length }})</summary>
+  <ng-autocomplete
+    *ngIf="!readOnly"
+    #object_autocompete
+    [data]="autocompleteValues"
+    [searchKeyword]="'name'"
+    [isLoading]="isLoading"
+    placeholder="object name"
+    (inputChanged)="onChangeLinkSearch($event)"
+    [notFoundTemplate]="notFoundTemplate"
+    [itemTemplate]="itemTemplate"
+    minQueryLength="3"
+    debounceTime="3"
+    (selected)="selectLinkEvent($event)"
+  >
+  </ng-autocomplete>
+  <dl *ngIf="links && links.length > 0">
+    <div *ngFor="let link of links">
+      <dt>
+        <editable appEditableOnFocus (save)="savePredicate(link)">
+          <ng-template viewMode>{{ link.predicate }}</ng-template>
+          <ng-template editMode>
+            <ng-autocomplete
+              editableOnEnter
+              [data]="autocompletePredicates"
+              [searchKeyword]="'predicate'"
+              [isLoading]="isLoading"
+              placeholder="type"
+              (inputChanged)="onChangePredicateSearch($event)"
+              [notFoundTemplate]="notFoundTemplate"
+              [itemTemplate]="predicateTemplate"
+              minQueryLength="3"
+              debounceTime="3"
+              (selected)="selectPredicateEvent($event)"
+            ></ng-autocomplete>
+          </ng-template>
+        </editable>
+      </dt>
+      <dd *ngIf="link.$ref | subject | async as object">
+        <a [routerLink]="['/object', object.id]">{{ object.metadata.name }}</a>
+        <ng-container *ngIf="!readOnly">
+          <a [routerLink]="" (click)="remove(link)" style="float: right; margin-left: 10px">
+            <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+          </a>
+          <a (click)="markdownToClipboard(link, object)" [routerLink]="" style="float: right">
+            <fa-icon [icon]="['fas', 'copy']"></fa-icon>
+          </a>
+        </ng-container>
+      </dd>
+    </div>
+  </dl>
+</details>
+
+<ng-template #predicateTemplate let-item>
+  <a [innerHTML]="item"></a>
+</ng-template>
+
+<ng-template #itemTemplate let-item>
+  <a [innerHTML]="item.name"></a>
+</ng-template>
+
+<ng-template #notFoundTemplate let-notFound>
+  <div [innerHTML]="notFound"></div>
+</ng-template>

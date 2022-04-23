@@ -1,50 +1,74 @@
+<input
+  #searchQuery
+  (keyup.enter)="search(searchQuery.value)"
+  autofocus
+  type="search"
+  id="search"
+  name="search"
+  placeholder="search"
+/>
+
 <ng-container *ngIf="results && results.hits">
-  <aside>
-    <nav>
-      <em>{{results.hits.total}} results</em>
-      <hr />
-      <details class="agg" *ngFor="let cfg of aggs" open>
+
+  <details>
+    <summary><strong>Filters</strong></summary>
+    <div class="grid">
+      <div *ngFor="let cfg of aggs">
         <ng-container *ngIf="results.aggregations[cfg.code] as agg">
-          <summary>
-            <strong>{{cfg.name}}</strong>
-          </summary>
+          <h5>{{ cfg.name }}</h5>
           <ul>
             <li *ngFor="let term of agg.buckets">
-              <small><a (click)="toggleFilter(cfg.code, term.key)" class="secondary">
-                  {{term.key}}
-                  <strong>{{term.doc_count}} </strong>
-                  <fa-icon *ngIf="hasFilter(cfg.code, term.key)" [icon]="['fas', 'check-circle']">
-                  </fa-icon>
-                </a>
-              </small>
+              <a
+                [routerLink]=""
+                (click)="
+                  $event.preventDefault(); toggleFilter(cfg.code, term.key)
+                "
+              >
+                {{ term.key }}&nbsp;({{ term.doc_count }})
+                <fa-icon
+                  *ngIf="hasFilter(cfg.code, term.key)"
+                  [icon]="['fas', 'check-circle']"
+                >
+                </fa-icon>
+              </a>
             </li>
           </ul>
         </ng-container>
-      </details>
-    </nav>
-  </aside>
+      </div>
+    </div>
+  </details>
 
-  <div class="content" role="document">
-    <ng-container *ngIf="results.hits.total > 0; else noResult">
-      <article *ngFor="let object of results.hits.hits">
-        <h4>
-          <app-object-card [object]="object"></app-object-card>
-        </h4>
-        <h5 *ngIf="object.metadata.objects">{{object.metadata.objects.length}} objects</h5>
-        <details>
-          <summary>More...</summary>
-          <app-markdown *ngIf="object.metadata.content" [readOnly]="true" [data]="object.metadata.content">
-          </app-markdown>
-        </details>
+  <strong>{{ results.hits.total }} results</strong>
+  <ol *ngIf="results.hits.total > 0; else noResult">
+    <li *ngFor="let object of results.hits.hits; index as n">
+      <article>
+        <label>
+          <input (change)="bookmark($event, object)" type="checkbox" [checked]="isBookmarked(object)" />
+          <fa-icon [icon]="['fas', 'thumbtack']"></fa-icon>
+        </label>
+        <h5>
+          <small>{{n + 1}}.</small>&nbsp;
+          <a [routerLink]="['/object', object.id, 'edit']">{{ object.metadata.name }}</a>
+        </h5>
+        <strong>{{ object.metadata.type }}</strong>
+        <p *ngIf="object.highlight && object.highlight['metadata.content']">
+          <ng-container *ngFor="let res of object.highlight['metadata.content']">
+            ... <span [innerHtml]="res"></span> ...
+          </ng-container>
+        </p>
       </article>
-    </ng-container>
-  </div>
-
+    </li>
+  </ol>
 
   <ng-template #noResult>
     <span>No results</span>
     <div>
-      <a (click)="clearAggFilters()" class="mt-4 button is-info is-small" translate>See all results</a>
+      <a
+        (click)="clearAggFilters()"
+        class="mt-4 button is-info is-small"
+        translate
+        >See all results</a
+      >
     </div>
   </ng-template>
 </ng-container>

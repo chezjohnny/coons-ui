@@ -1,0 +1,127 @@
+<ng-container *ngIf="subject && subject.metadata">
+  <article editableGroup (editableModeChange)="isContentEditing=$event=='edit' ? true : false" *ngIf="subject.metadata.content" class="preview">
+
+    <h1 *ngIf="title">
+      {{title}}
+      <a *ngIf="!isContentEditing && !readOnly" style="font-size: 0.6em" editableGroupEdit>
+        <fa-icon [icon]="['fas', 'pen']"></fa-icon>
+      </a>
+      <a *ngIf="isContentEditing && !readOnly" style="font-size: 0.6em"  editableGroupSave>
+        <fa-icon [icon]="['fas', 'floppy-disk']"></fa-icon>
+      </a>
+    </h1>
+    <ng-container
+      [ngTemplateOutlet]="metadata"
+      [ngTemplateOutletContext]="{subject, hasContent:true, data }"
+    >
+    </ng-container>
+    <editable
+      [enabled]="!readOnly"
+      openBindingEvent="dblclick"
+      closeBindingEvent="dblclick"
+      style="display: block; margin-bottom: 10px"
+      (save)="update()"
+      (cancel)="cancel()"
+    >
+      <ng-template viewMode>
+        <app-markdown [readOnly]="true" [data]="content"> </app-markdown>
+      </ng-template>
+      <ng-template *ngIf="!readOnly" editMode>
+        <app-markdown
+          (dataChange)="updateContent($event)"
+          [readOnly]="false"
+          [data]="subject.metadata.content"
+        >
+        </app-markdown>
+      </ng-template>
+    </editable>
+  </article>
+
+  <ng-container
+    *ngIf="!subject.metadata.content"
+    [ngTemplateOutlet]="metadata"
+    [ngTemplateOutletContext]="{subject, hasContent:false, data}"
+  >
+  </ng-container>
+</ng-container>
+
+<ng-template
+  let-subject="subject"
+  let-hasContent="hasContent"
+  let-data="data"
+  #metadata
+>
+  <article
+    [ngClass]="{ sticky: pinned, more: hasContent }"
+    [formGroup]="formGroup"
+  >
+    <header>
+      <a
+        *ngIf="hasContent === true && !readOnly"
+        [ngClass]="{ secondary: pinned }"
+        (click)="togglePinned()"
+        style="float: right"
+        ><fa-icon [icon]="['fas', 'thumbtack']"></fa-icon
+      ></a>
+
+      <editable
+        [enabled]="!readOnly"
+        appEditableOnFocus
+        (save)="update()"
+        (cancel)="cancel()"
+      >
+        <ng-template viewMode>
+          <h2>
+            {{ subject.metadata.name }}
+          </h2>
+          <strong>{{ subject.metadata.type }}</strong>
+        </ng-template>
+
+        <ng-template editMode>
+          <input
+            autofocus
+            formControlName="name"
+            type="text"
+            placeholder="name"
+          />
+          <ng-autocomplete
+            id="type-input"
+            appSaveOnFocus
+            formControlName="type"
+            [data]="autocompleteType"
+            [isLoading]="typeIsLoading"
+            placeholder="Type"
+            (inputChanged)="onChangeSearch($event)"
+            [itemTemplate]="itemTemplate"
+            [notFoundTemplate]="notFoundTemplate"
+            minQueryLength="3"
+            debounceTime="3"
+          >
+          </ng-autocomplete>
+        </ng-template>
+      </editable>
+    </header>
+    <button
+      *ngIf="hasContent === false && !readOnly"
+      (click)="setDefaultContent()"
+    >
+      Add content
+    </button>
+    <app-links
+      (updatePredicate)="updatePredicate($event)"
+      (addItem)="addLink($event)"
+      (removeItem)="removeLink($event)"
+      [links]="subject.metadata.objects"
+      [readOnly]="readOnly"
+    ></app-links>
+    <app-files [readOnly]="readOnly" [subjectID]="subject.id"></app-files>
+  </article>
+</ng-template>
+
+<ng-template #itemTemplate let-item>
+  <a [innerHTML]="item"></a>
+</ng-template>
+
+<ng-template #notFoundTemplate let-notFound>
+  <div [innerHTML]="notFound"></div>
+</ng-template>

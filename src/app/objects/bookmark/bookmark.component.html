@@ -1,0 +1,21 @@
+<ol cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="bookmarkedObject.length > 0; else noResult">
+  <li
+
+    *ngFor="let object of bookmarkedObject; index as index"
+  >
+    <article cdkDrag>
+      <label>
+        <a [routerLink]="" (click)="remove(object)"
+          ><fa-icon [icon]="['fas', 'trash']"></fa-icon
+        ></a>
+      </label>
+      <h5>
+      <fa-icon style="margin-right: 20px" [icon]="['fas', 'bars']"></fa-icon>
+        <a [routerLink]="['/object', object.id, 'edit']">{{ object.metadata.name }}</a>
+      </h5>
+      <strong>{{ object.metadata.type }}</strong>
+    </article>
+  </li>
+</ol>
+
+<ng-template #noResult> Please bookmarks some results. </ng-template>

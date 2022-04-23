@@ -3,18 +3,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ObjectsService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   prefixURL = '/api/objects';
 
   defaultObject = {
     metadata: {
       name: 'changeit',
-      type: 'unknown'
-    }
+      type: 'unknown',
+    },
   };
 
   search(query, filters = null): Observable<any> {
@@ -31,22 +30,17 @@ export class ObjectsService {
     return this.http.get(`${this.prefixURL}/${pid}`);
   }
 
-  create(data?: (null | any)): Observable<any> {
+  create(data?: null | any): Observable<any> {
     if (data == null) {
       data = this.defaultObject;
     }
-    return this.http.post(
-      this.prefixURL,
-      data
-    );
+    return this.http.post(this.prefixURL, data);
   }
 
   update(data): Observable<any> {
-    return this.http.put(
-      `${this.prefixURL}/${data.id}`,
-      data,
-      { headers: { 'Content-Type': 'application/json' } }
-    );
+    return this.http.put(`${this.prefixURL}/${data.id}`, data, {
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   extractIDFromRef(ref: string): string {
@@ -54,5 +48,4 @@ export class ObjectsService {
   }
 
   // delete(pid): Observable<any> { }
-
 }
