@@ -112,6 +112,7 @@
       (addItem)="addLink($event)"
       (removeItem)="removeLink($event)"
       [links]="subject.metadata.objects"
+      [id]="subject.id"
       [readOnly]="readOnly"
     ></app-links>
     <app-files [readOnly]="readOnly" [subjectID]="subject.id"></app-files>

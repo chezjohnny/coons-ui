@@ -1,33 +1,56 @@
 <ngx-loading-bar></ngx-loading-bar>
-<main  id="page" class="container-fluid">
-  <aside class="icons">
-    <nav>
-      <ul>
-        <li>
-          <a [routerLink]="['']" role="button" class="outline">
-            <i><fa-icon [icon]="['fas', 'home']"></fa-icon></i>
-          </a>
-        </li>
-        <li>
-          <a href=""  (click)="createRecord($event)" role="button" class="outline">
-            <fa-icon [icon]="['fas', 'plus']"></fa-icon>
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/objects']" role="button" class="outline">
-            <fa-icon [icon]="['fas', 'search']"></fa-icon>
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/bookmark']" role="button" class="outline">
-            <fa-icon [icon]="['fas', 'bookmark']"></fa-icon>
-          </a>
-       </li>
-      </ul>
-    </nav>
-  </aside>
-  <div role="document">
+<main id="page" class="container-fluid">
+  <ng-container *ngIf="authorized; else unauthorized">
+    <aside class="icons">
+      <nav>
+        <ul>
+          <li>
+            <a [routerLink]="['']" role="button" class="outline">
+              <i><fa-icon [icon]="['fas', 'home']"></fa-icon></i>
+            </a>
+          </li>
+          <li>
+            <a
+              href=""
+              (click)="createRecord($event)"
+              role="button"
+              class="outline"
+            >
+              <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['/objects']" role="button" class="outline">
+              <fa-icon [icon]="['fas', 'search']"></fa-icon>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['/bookmark']" role="button" class="outline">
+              <fa-icon [icon]="['fas', 'bookmark']"></fa-icon>
+            </a>
+          </li>
+          <li><hr></li>
+          <li *ngIf="!editMode">
+            <a  href="#" (click)="$event.preventDefault();toggleEditMode()" role="button" class="outline">
+              <fa-icon [icon]="['fas', 'pen']"></fa-icon>
+            </a>
+          </li>
+          <li *ngIf="editMode">
+            <a  href="#" (click)="$event.preventDefault();toggleEditMode()" role="button" class="outline">
+              <fa-icon [icon]="['fas', 'eye']"></fa-icon>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+    <div role="document">
       <router-outlet></router-outlet>
-  </div>
+    </div>
+  </ng-container>
 </main>
 
+<ng-template #unauthorized>
+  <div role="document">
+    <article>Please login.</article>
+  </div>
+</ng-template>

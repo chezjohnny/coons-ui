@@ -1,16 +1,25 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { faShirt } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { distinctUntilChanged, tap, throttleTime } from 'rxjs/operators';
 import { ObjectsService } from 'src/app/services/objects.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-triplet',
   templateUrl: './triplet.component.html',
   styleUrls: ['./triplet.component.scss'],
 })
-export class TripletComponent implements OnInit, OnChanges {
+export class TripletComponent implements OnInit, OnChanges, OnDestroy {
   keyword = 'name';
 
   @Input()
@@ -31,10 +40,13 @@ export class TripletComponent implements OnInit, OnChanges {
 
   private _pinned = false;
 
+  subscription = new Subscription();
+
   constructor(
     private route: ActivatedRoute,
     private objectService: ObjectsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private userService: UserService
   ) {
     this.formGroup = this.formBuilder.group({
       name: [''],
@@ -56,15 +68,24 @@ export class TripletComponent implements OnInit, OnChanges {
         this.readOnly = false;
       } else {
         this.readOnly = true;
+        this.subscription.add(
+          this.userService.editMode$.subscribe(
+            (mode) => (this.readOnly = !mode)
+          )
+        );
       }
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.id && changes.id.currentValue) {
+    if (changes.id && changes.id.currentValue) {
       this.id = changes.id.currentValue;
       this.getsubjects(this.id);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   get pinned(): boolean {
@@ -211,12 +232,15 @@ export class TripletComponent implements OnInit, OnChanges {
     this.update();
   }
 
-  updatePredicate(object) {
-    const toUpdate = this.formGroup
-      .get('objects')
-      .controls.find((obj) => obj.controls.$ref.value.endsWith(object.id));
-    toUpdate.markAsDirty();
-    toUpdate.controls.predicate.setValue(object.predicate);
-    this.update();
+  updatePredicate(data) {
+    const index = this.subject.metadata.objects.findIndex(
+      (obj) => obj == data.object
+    );
+    if (index > -1) {
+      const toUpdate = this.formGroup.get('objects').controls[index];
+      toUpdate.markAsDirty();
+      toUpdate.controls.predicate.setValue(data.predicate);
+      this.update();
+    }
   }
 }

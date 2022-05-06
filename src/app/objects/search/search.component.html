@@ -48,7 +48,7 @@
         </label>
         <h5>
           <small>{{n + 1}}.</small>&nbsp;
-          <a [routerLink]="['/object', object.id, 'edit']">{{ object.metadata.name }}</a>
+          <a [routerLink]="['/object', object.id]">{{ object.metadata.name }}</a>
         </h5>
         <strong>{{ object.metadata.type }}</strong>
         <p *ngIf="object.highlight && object.highlight['metadata.content']">

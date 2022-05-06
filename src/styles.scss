@@ -1,5 +1,6 @@
 // /* You can add global styles to this file, and also import other style files */
-@import "~simplemde/dist/simplemde.min.css";
+@import "~easymde/dist/easymde.min";
+@import "~highlight.js/styles/github";
 @import "~@picocss/pico/scss/pico";
 
 [data-theme="coons"] {
@@ -104,7 +105,7 @@
   right: 8px;
 }
 
-[data-theme="coons"] article strong {
+[data-theme="coons"] app-bookmark article strong {
   margin-left:3rem;
 }
 
@@ -230,4 +231,8 @@ ng-autocomplete input {
 
 [data-theme="coons"] .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+[data-theme="coons"] .EasyMDEContainer button {
+  color: var(--primary);
 }

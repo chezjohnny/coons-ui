@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { faL } from '@fortawesome/free-solid-svg-icons';
 import { map } from 'rxjs/operators';
 import { ObjectsFilesService } from 'src/app/services/objects-files.service';
+import { UserService } from 'src/app/services/user.service';
 import { FileWithMetadata } from '../../classes/file-with-metadata';
 
 @Component({
@@ -28,14 +29,18 @@ export class FilesComponent implements OnChanges {
 
   files: FileWithMetadata[] = [];
 
-  acceptMimeTypes = 'image/jpeg,image/jpg,image/png,image/gif,application/pdf';
+  acceptMimeTypes: string;
 
   constructor(
     private objectFilesService: ObjectsFilesService,
     sanitizer: DomSanitizer,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
+    private userService: UserService
   ) {
     sanitizer.bypassSecurityTrustUrl('*');
+    const mimeConfig =
+      this.userService?.currentUser?.config?.supported_mime_types;
+    this.acceptMimeTypes = mimeConfig ? mimeConfig : '*';
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -87,8 +92,17 @@ export class FilesComponent implements OnChanges {
   }
 
   markdownToClipboard(file) {
-    const url = this.downloadURL(file);
-    this.clipboard.copy(`[${file.name}](${url})`);
+    console.log(file.type);
+    const url = encodeURI(this.downloadURL(file));
+    if (file.type.startsWith('image/')) {
+      this.clipboard.copy(`
+<figure>
+<img src="${url}">
+<figcaption>${file.name}</figcaption>
+</figure>
+`);
+    } else {
+      this.clipboard.copy(`[${file.name}](${url})`);
+    }
   }
-
 }
