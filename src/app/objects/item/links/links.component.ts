@@ -19,12 +19,16 @@ export class LinksComponent {
 
   @Input()
   links: Array<string>;
+
   @Input()
   readOnly = false;
 
+  @Input()
+  id: string;
+
   @Output() addItem = new EventEmitter<string>();
   @Output() removeItem = new EventEmitter<string>();
-  @Output() updatePredicate = new EventEmitter<{ id; predicate }>();
+  @Output() updatePredicate = new EventEmitter<{object, predicate}>();
 
 
   isLoading = false;
@@ -39,7 +43,7 @@ export class LinksComponent {
 
   onChangeLinkSearch(val: string) {
     this.objectService
-      .search(`metadata.name:*${val}*`)
+      .search(`metadata.name:*${val}* NOT id:${this.id}`)
       .pipe(
         distinctUntilChanged(),
         tap((results) => {
@@ -88,11 +92,10 @@ export class LinksComponent {
 
   markdownToClipboard(link, object) {
     const url = link.$ref.replace('https://coons.io/api/objects', `/object`);
-    this.clipboard.copy(`[${object.metadata.name} (${link.predicate})](${url}/edit)`);
+    this.clipboard.copy(`[${object.metadata.name} (${link.predicate})](${url})`);
   }
 
-  savePredicate(obj) {
-    const id = this.objectService.extractIDFromRef(obj.$ref);
-    this.updatePredicate.emit({ predicate: this.currentPredicate, id });
+  savePredicate(object) {
+    this.updatePredicate.emit({object, predicate: this.currentPredicate});
   }
 }

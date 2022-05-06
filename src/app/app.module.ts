@@ -23,7 +23,8 @@ import {
   faTimesCircle,
   faTrash,
   faPen,
-  faFloppyDisk
+  faFloppyDisk,
+  faEye
 } from '@fortawesome/free-solid-svg-icons';
 import { EditableModule } from '@ngneat/edit-in-place';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
@@ -44,7 +45,6 @@ import { AutofocusDirective } from './directives/autofocus.directive';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {ClipboardModule} from '@angular/cdk/clipboard';
-
 
 @NgModule({
   declarations: [
@@ -80,6 +80,6 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
 })
 export class AppModule {
   constructor(private library: FaIconLibrary) {
-    library.addIcons(faHome, faCopy, faBars, faPlus, faTrash,faSearch, faBookmark, faDownload, faLongArrowAltRight, faCheckCircle, faTimesCircle, faFilePdf, faFileImage, faFile, faThumbtack, faPen, faFloppyDisk);
+    library.addIcons(faHome, faCopy, faBars, faPlus, faTrash,faSearch, faBookmark, faDownload, faLongArrowAltRight, faCheckCircle, faTimesCircle, faFilePdf, faFileImage, faFile, faThumbtack, faPen, faEye, faFloppyDisk);
   }
 }
